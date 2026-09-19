@@ -17,9 +17,9 @@ void P0S_Scene::init()
     physx::PxShape* shape = CreateShape(physx::PxSphereGeometry(0.5f));
 
     //AXIS
-	/*addRenderItem(shape, u, RED);
+	addRenderItem(shape, u, RED);
     addRenderItem(shape, v, GREEN);
-    addRenderItem(shape, w, BLUE);*/
+    addRenderItem(shape, w, BLUE);
 
     //ENEMY
     addRenderItem(shape, Vector3(0.0f, 0.0f, 0.0f), BLACK);
@@ -36,6 +36,18 @@ void P0S_Scene::init()
     for (const auto& pos : objectivePositions) {
         addRenderItem(shape, pos, ColorVision(enemyVision.dot(pos)));
     }
+
+    //LERP
+    Vector3 A(-8.0f, 1.0f, -8.0f);
+    Vector3 B(8.0f, 8.0f, 8.0f);
+
+    addRenderItem(shape, A, DARK_RED);
+    addRenderItem(shape, B, DARK_RED);
+
+	for (float i = 0; i < 10; ++i) {
+        Vector3 pos = A + (i/10) * (B - A);
+		addRenderItem(shape, pos, GRAY);
+	}
 }
 
 void P0S_Scene::cleanup()
@@ -64,20 +76,25 @@ void P0S_Scene::addRenderItem(physx::PxShape* shape, const Vector3& pos, const C
     m_renderItems.push_back(new RenderItem(shape, &m_transforms.back(), Color(color)));
 }
 
-// Funcion para convertir un color enumerado a un Vector4 RGBA con el fin de mejorar la claridad
 Vector4 P0S_Scene::Color(Colors color)
 {
     switch (color) {
         case RED:
             return Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+		case DARK_RED:
+			return Vector4(0.5f, 0.0f, 0.0f, 1.0f);
         case GREEN:
             return Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		case DARK_GREEN:
+			return Vector4(0.0f, 0.5f, 0.0f, 1.0f);
         case BLUE:
             return Vector4(0.0f, 0.0f, 1.0f, 1.0f);
         case YELLOW:
             return Vector4(1.0f, 1.0f, 0.0f, 1.0f);
         case BLACK:
             return Vector4(0.0f, 0.0f, 0.0f, 1.0f);
+        case GRAY:
+            return Vector4(0.5f, 0.5f, 0.5f, 1.0f);
         default:
             return Vector4(1.0f, 1.0f, 1.0f, 1.0f);
     }
@@ -86,10 +103,10 @@ Vector4 P0S_Scene::Color(Colors color)
 P0S_Scene::Colors P0S_Scene::ColorVision(float dot)
 {
     if (dot > 0) {
-		return GREEN;
+		return DARK_GREEN;
 	}
 	else if (dot < 0) {
-		return RED;
+		return DARK_RED;
 	}
 	else {
 		return YELLOW;
