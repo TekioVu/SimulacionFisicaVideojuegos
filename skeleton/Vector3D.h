@@ -20,6 +20,7 @@ public:
 	float dot(const Vector3D& v) const {
 		return x * v.x + y * v.y + z * v.z;
 	}
+
 	Vector3D cross(const Vector3D& v) const {
 		return Vector3D(y*v.z - z*v.y, z*v.x - x*v.z, x*v.y - y*v.x);
 	}
@@ -52,6 +53,13 @@ public:
 
 	Vector3D operator*(const float& other) const {
 		return Vector3D(x * other, y * other, z * other);
+	}
+
+	Vector3D operator*=(const float& other){
+		x *= other;
+		y *= other;
+		z *= other;
+		return *this;
 	}
 
 	Vector3D operator/(const float& other) const {
