@@ -1,9 +1,9 @@
 #include "Particle.h"
 
-Particle::Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping)
+Particle::Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius)
 	: pose(_pos), vel(_vel), acc(_acc), damping(_damping)
 {
-	physx::PxShape* shape = CreateShape(physx::PxSphereGeometry(0.2f));
+	physx::PxShape* shape = CreateShape(physx::PxSphereGeometry(_radius));
 	renderItem = new RenderItem(shape, &pose, Vector4(1.0f, 0.0f, 0.0f, 1.0f));
 }
 

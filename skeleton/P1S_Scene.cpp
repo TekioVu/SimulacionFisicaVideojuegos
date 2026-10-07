@@ -9,8 +9,9 @@ void P1S_Scene::init()
     Vector3 v = Vector3(1.0f, 0.0f, 1.0f);
     Vector3 a = Vector3(3.0f, 0.0f, 0.0f);
 	float damping = 0.8f;
+    float radius = 1.0f;
 
-	particle = new Particle(Vector3(0.0f, 0.0f, 0.0f), v, a, damping);
+	particle = new Particle(Vector3(0.0f, 0.0f, 0.0f), v, a, damping, radius);
 }
 
 void P1S_Scene::cleanup()

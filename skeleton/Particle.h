@@ -5,7 +5,7 @@
 class Particle
 {
 public:
-	Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping);
+	Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius);
 	~Particle();
 
 	void integrateEuler(double t);
@@ -14,11 +14,13 @@ public:
 
 	void setAcceleration(Vector3D a);
 
-private:
+protected:
 	Vector3D vel;
 	Vector3D acc;
 	double damping;
+	float mass;
 
+private:
 	Vector3D prevPos;
 	bool firstStep;
 

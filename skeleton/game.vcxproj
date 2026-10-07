@@ -265,12 +265,15 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="P0S_Scene.cpp" />
     <ClCompile Include="P1S_Scene.cpp" />
+    <ClCompile Include="P2S_Scene.cpp" />
     <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="callbacks.hpp" />
@@ -278,13 +281,16 @@
     <ClInclude Include="EmptyScene.h" />
     <ClInclude Include="P0S_Scene.h" />
     <ClInclude Include="P1S_Scene.h" />
+    <ClInclude Include="P2S_Scene.h" />
     <ClInclude Include="Particle.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Vector3D.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
