@@ -39,23 +39,9 @@ public:
 		OBJECTS_COUNT
 	};
 
-	enum Colors
-	{
-		RED,
-		DARK_RED,
-		GREEN,
-		DARK_GREEN,
-		BLUE,
-		YELLOW,
-		BLACK,
-		GRAY
-	};
-
 private:
 	// Función para agregar un RenderItem a la escena, almacenando su transformada y color
 	void addRenderItem(physx::PxShape* shape, const Vector3& pos, const Colors& color);
-	// Funcion para convertir un color enumerado a un Vector4 RGBA con el fin de mejorar la claridad
-	Vector4 Color(Colors color);
 	// Función para determinar el color de un objetivo basado en la visión del enemigo
 	Colors ColorVision(float dot);
 

@@ -3,7 +3,6 @@
 #include "RenderUtils.hpp"
 #include <deque>
 #include <vector>
-#include "Projectile.h"
 #include "Weapon.h"
 
 class P2S_Scene : public Scene
@@ -21,23 +20,11 @@ public:
 
 	};
 
-	enum Colors
-	{
-		RED,
-		DARK_RED,
-		GREEN,
-		DARK_GREEN,
-		BLUE,
-		YELLOW,
-		BLACK,
-		GRAY
-	};
-
 private:
 	// Función para agregar un RenderItem a la escena, almacenando su transformada y color
 	void addRenderItem(physx::PxShape* shape, const Vector3& pos, const Colors& color);
-	// Funcion para convertir un color enumerado a un Vector4 RGBA con el fin de mejorar la claridad
-	Vector4 Color(Colors color);
+
+	void AddBullseye(float r, int nCircles);
 
 	std::deque<physx::PxTransform> m_transforms;
 	std::vector<RenderItem*> m_renderItems;

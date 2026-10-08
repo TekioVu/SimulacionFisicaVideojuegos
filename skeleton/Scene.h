@@ -2,12 +2,20 @@
 
 #include <string>
 #include "PxPhysicsAPI.h"
+#include "RenderUtils.hpp"
 
 // Clase base para las distintas escenas de la aplicación.
 // Provee la interfaz mínima que debe implementar cualquier escena:
 // inicialización, limpieza, actualización por frame y manejo de teclado.
 class Scene {
 public:
+    enum Colors
+    {
+        RED,DARK_RED, GREEN, DARK_GREEN,
+        BLUE,YELLOW, BLACK,GRAY, WHITE
+    };
+    static Vector4 Color(Colors color);
+
     // Construye la escena con un nombre identificador.
     explicit Scene(std::string name) : m_name(std::move(name)) {}
     virtual ~Scene() = default;

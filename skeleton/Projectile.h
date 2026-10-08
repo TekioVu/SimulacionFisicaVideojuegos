@@ -2,7 +2,7 @@
 #include "Particle.h"
 
 static constexpr float MASS_INCREMENT = 0.1f;
-static constexpr float GRAVITY_INCREMENT = 0.1f;
+static constexpr float VEL_INCREMENT = 1.0f;
 
 class Projectile : public Particle
 {
@@ -31,6 +31,6 @@ private:
 	float setSimulatedMass();
 	float setSimulatedGravity();
 
-
+	void updateText(float simG, float rG, float simMass, float rMass);
 };
 
