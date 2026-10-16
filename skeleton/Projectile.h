@@ -2,7 +2,7 @@
 #include "Particle.h"
 
 static constexpr float MASS_INCREMENT = 0.1f;
-static constexpr float VEL_INCREMENT = 1.0f;
+static constexpr float VEL_INCREMENT = 3.0f;
 
 class Projectile : public Particle
 {

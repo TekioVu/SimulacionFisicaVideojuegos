@@ -7,7 +7,7 @@ extern std::string display_text;
 Projectile::Projectile(Vector3D _pos, Vector3D _realV, Vector3D _simV, float _realMass, float _realGravity, Vector3D _acc, float _damping, float _radius)
 	: Particle(_pos, _simV, _acc, _damping, _radius), realVel(_realV), realMass(_realMass), realGravity(_realGravity) {
 
-	updateText(setSimulatedGravity(), realGravity, setSimulatedMass(), realMass);
+	updateText(setSimulatedGravity(), realVel.magnitude(), setSimulatedMass(), realMass);
 }
 
 float Projectile::setSimulatedMass() {
@@ -40,28 +40,30 @@ void Projectile::keyPress(unsigned char key, const physx::PxTransform& camera) {
 
 void Projectile::modifyParameter(adjustableParameters parameter, int sign) {
 	switch (parameter) {
-		case REAL_VELOCITY:
+	case REAL_VELOCITY:
+		realVel += Vector3D(0, sign * VEL_INCREMENT, 0);
+		if (realVel.magnitude() < 1e-3f)          // no permitir 0
 			realVel += Vector3D(0, sign * VEL_INCREMENT, 0);
-			setSimulatedGravity();
-			break;
+		break;
 
-		case REAL_MASS:
+	case REAL_MASS:
+		realMass += sign * MASS_INCREMENT;
+		if (fabs(realMass) < 1e-3f)               // no permitir 0
 			realMass += sign * MASS_INCREMENT;
-			setSimulatedMass();
-			break;
+		break;
 	}
 
-	updateText(setSimulatedGravity(), realGravity, setSimulatedMass(), realMass);
+	updateText(setSimulatedGravity(), realVel.y, setSimulatedMass(), realMass);
 }
 
-void Projectile::updateText(float simG, float rG, float simMass, float rMass) 
+void Projectile::updateText(float simG, float realV, float simMass, float rMass) 
 {
 	std::ostringstream ss;
 	ss << std::fixed << std::setprecision(2)
 		<< "SimG: " << setSimulatedGravity()
-		<< " | RealG:" << realGravity
+		<< " | RealV:" << realV
 		<< " | SimM: " << setSimulatedMass()
-		<< " | RealM: " << realMass;
+		<< " | RealM: " << rMass;
 
 	display_text = ss.str();
 }

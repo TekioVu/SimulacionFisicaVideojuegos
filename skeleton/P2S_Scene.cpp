@@ -9,7 +9,7 @@ void P2S_Scene::init()
 
     weapon = new Weapon();
 
-    //                                 realV  simV  realMass  realGravity  radius
+    //                            realV     simV   realMass  realGravity  radius
     Weapon::ProjectileInfo p1 = { 350.0f,  40.0f,   0.008f,    -9.8f,    0.15f }; // Pistola 9 mm
     Weapon::ProjectileInfo p2 = { 900.0f,  70.0f,   0.004f,    -9.8f,    0.10f }; // Fusil de asalto 5.56 mm
     Weapon::ProjectileInfo p3 = { 400.0f,  30.0f,   6.0f,      -9.8f,    0.50f }; // Cañón (bola de hierro)

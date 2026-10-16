@@ -1,10 +1,10 @@
 #include "Particle.h"
 
-Particle::Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius)
-	: pose(_pos), vel(_vel), acc(_acc), damping(_damping)
+Particle::Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius, Scene::Colors color, float _lifeTime)
+	: pose(_pos), vel(_vel), acc(_acc), damping(_damping), lifeTime(_lifeTime), alive(true)
 {
 	physx::PxShape* shape = CreateShape(physx::PxSphereGeometry(_radius));
-	renderItem = new RenderItem(shape, &pose, Vector4(0.3f, 1.0f, 0.0f, 1.0f));
+	renderItem = new RenderItem(shape, &pose, Scene::Color(color));
 }
 
 Particle::~Particle()
@@ -18,6 +18,14 @@ Particle::~Particle()
 void Particle::setAcceleration(Vector3D a)
 {
 	acc = a;
+}
+
+void Particle::udpateLifeTime(double dt)
+{
+	lifeTime -= dt;
+	if (lifeTime <= 0) {
+		alive = false;
+	}
 }
 
 void Particle::integrateEuler(double t)

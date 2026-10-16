@@ -5,6 +5,9 @@
 class Weapon
 {
 public:
+	Weapon();
+	~Weapon();
+
 	struct ProjectileInfo
 	{
 		float realV;
@@ -16,8 +19,6 @@ public:
 		float radius;
 	};
 
-	Weapon();
-	~Weapon();
 	void keyPress(unsigned char key, const physx::PxTransform& camera);
 	void updateBullets(double dt);
 	void addProjectile(ProjectileInfo p_info);

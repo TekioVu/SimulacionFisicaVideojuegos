@@ -1,11 +1,24 @@
 #pragma once
 #include "Vector3D.h"
 #include "RenderUtils.hpp"
+#include "Scene.h"
+#include <cfloat>
+
+struct ParticleModel
+{
+	Vector3D pos;
+	Vector3D vel;
+	Vector3D acc;
+	float damping;
+	float radius;
+	float lifeTime;
+	Scene::Colors color;
+};
 
 class Particle
 {
 public:
-	Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius);
+	Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius, Scene::Colors color = Scene::GREEN, float _lifeTime = FLT_MAX);
 	~Particle();
 
 	void integrateEuler(double t);
@@ -14,11 +27,19 @@ public:
 
 	void setAcceleration(Vector3D a);
 
+	void udpateLifeTime(double t);
+
+	bool IsAlive() { return alive; }
+	physx::PxTransform GetPos() { return pose; }
+
 protected:
 	Vector3D vel;
 	Vector3D acc;
 	double damping;
 	float mass;
+
+	float lifeTime;
+	bool alive;
 
 private:
 	Vector3D prevPos;
