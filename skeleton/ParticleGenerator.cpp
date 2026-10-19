@@ -17,11 +17,14 @@ Particle* ParticleGenerator::generateParticle()
 {
 	Vector3D varPos =  sample(model.pos, info.pos);
 	Vector3D varVel =  sample(model.vel, info.vel);
-	Vector3D varAcc =  sample(model.acc, info.acc);
+	Vector3D varAcc = sample(model.acc, info.acc);
+	Vector3D varColor =  sample(model.color, info.color);
 	float varDamping = sample(model.damping, info.damping);
-	float varRadius =  sample(model.radius, info.radius);
+	float varRadius = sample(model.radius, info.radius);
+	float varOppacity =  sample(model.oppacity, info.oppacity);
+	Vector4 color = {varColor, varOppacity};
 
-	Particle* p = new Particle(varPos, varVel, varAcc, varDamping, varRadius, model.color, model.lifeTime);
+	Particle* p = new Particle(varPos, varVel, varAcc, varDamping, varRadius, color, model.lifeTime);
 
 	return p;
 }

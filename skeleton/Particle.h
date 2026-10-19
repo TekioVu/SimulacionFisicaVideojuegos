@@ -9,15 +9,17 @@ struct ParticleModel
 	Vector3D pos;
 	Vector3D vel;
 	Vector3D acc;
+	Vector3D color;
 	float damping;
 	float radius;
 	float lifeTime;
-	Scene::Colors color;
+	float oppacity;
 };
 
 class Particle
 {
 public:
+	Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius, Vector4 color, float _lifeTime = FLT_MAX);
 	Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius, Scene::Colors color = Scene::GREEN, float _lifeTime = FLT_MAX);
 	~Particle();
 

@@ -1,10 +1,19 @@
 #include "Particle.h"
 
-Particle::Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius, Scene::Colors color, float _lifeTime)
-	: pose(_pos), vel(_vel), acc(_acc), damping(_damping), lifeTime(_lifeTime), alive(true)
+// Particle.cpp
+Particle::Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius,
+    Vector4 color, float _lifeTime)
+    : pose(_pos), vel(_vel), acc(_acc), damping(_damping), lifeTime(_lifeTime), alive(true)
 {
-	physx::PxShape* shape = CreateShape(physx::PxSphereGeometry(_radius));
-	renderItem = new RenderItem(shape, &pose, Scene::Color(color));
+    physx::PxShape* shape = CreateShape(physx::PxSphereGeometry(_radius));
+    renderItem = new RenderItem(shape, &pose, color);
+}
+
+// El del enum solo convierte y delega
+Particle::Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius,
+    Scene::Colors color, float _lifeTime)
+    : Particle(_pos, _vel, _acc, _damping, _radius, Scene::Color(color), _lifeTime)
+{
 }
 
 Particle::~Particle()

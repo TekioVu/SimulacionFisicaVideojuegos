@@ -13,7 +13,8 @@ void P3S_Scene::init()
     pm.damping =  0.99f;                             // casi sin pérdida de velocidad
     pm.radius =   0.1f;                              // tamaño de cada gota
     pm.lifeTime = 5.0f;
-    pm.color = Scene::Colors::BLUE;               // agua
+    pm.color = Vector3D{ 0.3f, 0.6f, 1.0f };    // azul claro de agua
+    pm.oppacity = 0.9f;                            // semitransparente
 
     ParticleGeneratorInfo pGI;
 
@@ -26,6 +27,9 @@ void P3S_Scene::init()
     pGI.acc                  = VectorSpec(NORMAL);
     pGI.acc.variability      = { 0.0, 0.0, 0.0 };
 
+    pGI.color = VectorSpec(UNIFORM);
+    pGI.color.variability = { 0.1, 0.1, 0.0 };   // R y G varían un poco, B siempre al máximo
+
     pGI.damping              = ScalarSpec(UNIFORM);
     pGI.damping.variability  = { 0.005 };           // 0.99 ± 0.005
 
@@ -34,6 +38,9 @@ void P3S_Scene::init()
 
     pGI.lifeTime             = ScalarSpec(UNIFORM);
     pGI.lifeTime.variability = { 0.5 };            // ±0.5 s
+
+    pGI.oppacity = ScalarSpec(UNIFORM);
+    pGI.oppacity.variability = { 0.15 };              // 0.6 ± 0.15
 
     ParticleSystem* hose = new ParticleSystem(pm, pGI);
     particleSystems.push_back(hose);

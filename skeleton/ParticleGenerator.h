@@ -20,8 +20,8 @@ using VectorSpec = Spec<3>;
 
 struct ParticleGeneratorInfo
 {
-    VectorSpec pos, vel, acc;
-    ScalarSpec damping, radius, lifeTime;
+    VectorSpec pos, vel, acc, color;
+    ScalarSpec damping, radius, lifeTime, oppacity;
 };
 
 class ParticleGenerator
