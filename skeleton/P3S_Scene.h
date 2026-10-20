@@ -23,6 +23,9 @@ public:
 private:
 	// Función para agregar un RenderItem a la escena, almacenando su transformada y color
 	void addRenderItem(physx::PxShape* shape, const Vector3& pos, const Colors& color);
+	void addHose();
+	void addFog();
+	void addFire();
 
 	std::deque<physx::PxTransform> m_transforms;
 	std::vector<RenderItem*> m_renderItems;
