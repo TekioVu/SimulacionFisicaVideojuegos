@@ -24,7 +24,7 @@ Particle* ParticleGenerator::generateParticle()
 	float varOppacity =  sample(model.oppacity, info.oppacity);
 	Vector4 color = {varColor, varOppacity};
 
-	Particle* p = new Particle(varPos, varVel, varAcc, varDamping, varRadius, color, model.lifeTime);
+	Particle* p = new Particle(varPos, varVel, varAcc, varDamping, varRadius, color, model.lifeTime, model.shape);
 
 	return p;
 }

@@ -4,6 +4,8 @@
 #include "Scene.h"
 #include <cfloat>
 
+enum class ShapeType { Sphere, Box, Capsule };
+
 struct ParticleModel
 {
 	Vector3D pos;
@@ -14,13 +16,16 @@ struct ParticleModel
 	float radius;
 	float lifeTime;
 	float oppacity;
+	ShapeType shape = ShapeType::Sphere;
 };
 
 class Particle
 {
 public:
-	Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius, Vector4 color, float _lifeTime = FLT_MAX);
-	Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius, Scene::Colors color = Scene::GREEN, float _lifeTime = FLT_MAX);
+	Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius, 
+		Vector4 color, float _lifeTime = FLT_MAX, ShapeType shape = ShapeType::Sphere);
+	Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius, 
+		Scene::Colors color = Scene::GREEN, float _lifeTime = FLT_MAX, ShapeType shape = ShapeType::Sphere);
 	~Particle();
 
 	void integrateEuler(double t);
@@ -44,6 +49,8 @@ protected:
 	bool alive;
 
 private:
+	physx::PxShape* MakeShape(ShapeType type, float size);
+
 	Vector3D prevPos;
 	bool firstStep;
 

@@ -2,19 +2,20 @@
 
 // Particle.cpp
 Particle::Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius,
-    Vector4 color, float _lifeTime)
+    Vector4 color, float _lifeTime, ShapeType _shape)
     : pose(_pos), vel(_vel), acc(_acc), damping(_damping), lifeTime(_lifeTime), alive(true)
 {
-    physx::PxShape* shape = CreateShape(physx::PxSphereGeometry(_radius));
+    physx::PxShape* shape = MakeShape(_shape, _radius);
     renderItem = new RenderItem(shape, &pose, color);
 }
 
 // El del enum solo convierte y delega
 Particle::Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius,
-    Scene::Colors color, float _lifeTime)
-    : Particle(_pos, _vel, _acc, _damping, _radius, Scene::Color(color), _lifeTime)
+    Scene::Colors color, float _lifeTime, ShapeType shape)
+    : Particle(_pos, _vel, _acc, _damping, _radius, Scene::Color(color), _lifeTime, shape)
 {
 }
+
 
 Particle::~Particle()
 {
@@ -23,6 +24,19 @@ Particle::~Particle()
 		renderItem = nullptr;
 	}
 }
+physx::PxShape* Particle::MakeShape(ShapeType type, float size)
+{
+    switch (type) {
+    case ShapeType::Sphere:
+        return CreateShape(physx::PxSphereGeometry(size));
+    case ShapeType::Box:
+        return CreateShape(physx::PxBoxGeometry(size, size, size));
+    case ShapeType::Capsule:
+        return CreateShape(physx::PxCapsuleGeometry(size, size));
+    }
+    return nullptr;
+}
+
 
 void Particle::setAcceleration(Vector3D a)
 {

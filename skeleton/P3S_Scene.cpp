@@ -52,7 +52,7 @@ void P3S_Scene::addHose()
     pm.radius = 0.1f;                              // tamaño de cada gota
     pm.lifeTime = 5.0f;
     pm.color = Vector3D{ 0.3f, 0.6f, 1.0f };    // azul claro de agua
-    pm.oppacity = 0.9f;                            // semitransparente
+    pm.oppacity = 1.0f;                            
 
     ParticleGeneratorInfo pGI;
 
@@ -78,7 +78,7 @@ void P3S_Scene::addHose()
     pGI.lifeTime.variability = { 0.5 };            // ±0.5 s
 
     pGI.oppacity = ScalarSpec(UNIFORM);
-    pGI.oppacity.variability = { 0.15 };              // 0.6 ± 0.15
+    pGI.oppacity.variability = { 0.0 };           
 
     ParticleSystem* hose = new ParticleSystem(pm, pGI);
     particleSystems.push_back(hose);
@@ -137,7 +137,7 @@ void P3S_Scene::addFire()
     fireModel.radius = 0.2f;
     fireModel.lifeTime = 1.5f;                             // vida corta
     fireModel.color = Vector3D{ 1.0f, 0.45f, 0.1f };    // naranja
-    fireModel.oppacity = 0.8f;
+    fireModel.oppacity = 1.0f;
 
     ParticleGeneratorInfo fireInfo;
 
@@ -163,7 +163,7 @@ void P3S_Scene::addFire()
     fireInfo.lifeTime.variability = { 0.5 };               // 1 a 2 s
 
     fireInfo.oppacity = ScalarSpec(UNIFORM);
-    fireInfo.oppacity.variability = { 0.15 };              // 0.65 a 0.95
+    fireInfo.oppacity.variability = { 0.0f };              // 0.65 a 0.95
 
     particleSystems.push_back(new ParticleSystem(fireModel, fireInfo));
 }
