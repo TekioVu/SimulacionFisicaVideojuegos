@@ -16,6 +16,7 @@ struct ParticleModel {
 	float radius = 1.0f;
 	float lifeTime = FLT_MAX;
 	ShapeType shape = ShapeType::Sphere;
+	float mass = 1.0f;
 };
 
 class Particle
@@ -23,9 +24,9 @@ class Particle
 public:
 	Particle(const ParticleModel& m);
 	Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius, 
-		Vector4 color, float _lifeTime = FLT_MAX, ShapeType shape = ShapeType::Sphere);
+		Vector4 color, float _lifeTime = FLT_MAX, ShapeType shape = ShapeType::Sphere, float _mass = 1.0f);
 	Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius, 
-		Scene::Colors color = Scene::GREEN, float _lifeTime = FLT_MAX, ShapeType shape = ShapeType::Sphere);
+		Scene::Colors color = Scene::GREEN, float _lifeTime = FLT_MAX, ShapeType shape = ShapeType::Sphere, float _mass = 1.0f);
 	~Particle();
 
 	void integrateEuler(double t);
@@ -33,11 +34,14 @@ public:
 	void integrateVerlet(double t);
 
 	void setAcceleration(Vector3D a);
+	void applyForce(Vector3D force);
 
 	void udpateLifeTime(double t);
 
 	bool IsAlive() { return alive; }
 	physx::PxTransform GetPos() { return pose; }
+	float GetMass() { return mass; }
+	Vector3D GetVel() { return vel; }
 
 protected:
 	Vector3D vel;

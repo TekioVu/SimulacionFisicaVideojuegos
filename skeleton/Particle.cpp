@@ -3,7 +3,7 @@
 // Particle.cpp
 Particle::Particle(const ParticleModel& m)
     : pose(m.pos), vel(m.vel), acc(m.acc), damping(m.damping),
-    lifeTime(m.lifeTime), alive(true)
+    lifeTime(m.lifeTime), mass(m.mass), alive(true)
 {
     physx::PxShape* shape = MakeShape(m.shape, m.radius);
     Vector4 c(m.color.x, m.color.y, m.color.z, m.opacity);
@@ -11,23 +11,22 @@ Particle::Particle(const ParticleModel& m)
 }
 
 Particle::Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius,
-    Vector4 color, float _lifeTime, ShapeType _shape)
+    Vector4 color, float _lifeTime, ShapeType _shape, float _mass)
     : Particle(ParticleModel{
           .pos = _pos, .vel = _vel, .acc = _acc,
           .color = Vector3D(color.x, color.y, color.z),
           .opacity = color.w,
           .damping = _damping, .radius = _radius,
-          .lifeTime = _lifeTime, .shape = _shape })
+          .lifeTime = _lifeTime, .shape = _shape,
+          .mass = _mass })
 {
 }
 
 Particle::Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius,
-    Scene::Colors color, float _lifeTime, ShapeType shape)
-    : Particle(_pos, _vel, _acc, _damping, _radius, Scene::Color(color), _lifeTime, shape)
+    Scene::Colors color, float _lifeTime, ShapeType shape, float _mass)
+    : Particle(_pos, _vel, _acc, _damping, _radius, Scene::Color(color), _lifeTime, shape, _mass)
 {
 }
-
-
 
 Particle::~Particle()
 {
@@ -36,6 +35,7 @@ Particle::~Particle()
 		renderItem = nullptr;
 	}
 }
+
 physx::PxShape* Particle::MakeShape(ShapeType type, float size)
 {
     switch (type) {
@@ -49,10 +49,14 @@ physx::PxShape* Particle::MakeShape(ShapeType type, float size)
     return nullptr;
 }
 
-
 void Particle::setAcceleration(Vector3D a)
 {
 	acc = a;
+}
+
+void Particle::applyForce(Vector3D force)
+{
+    acc = force / mass;
 }
 
 void Particle::udpateLifeTime(double dt)
