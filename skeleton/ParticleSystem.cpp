@@ -1,6 +1,6 @@
 #include "ParticleSystem.h"
 
-ParticleSystem::ParticleSystem(ParticleModel m, ParticleGeneratorInfo info)
+ParticleSystem::ParticleSystem(ParticleModel m, ParticleGeneratorInfo info, int _maxDistance) : maxDistance(_maxDistance), iniPos(m.pos)
 {
     generator = new ParticleGenerator(m , info);
 }
@@ -24,7 +24,9 @@ void ParticleSystem::update(double dt)
         particles[i]->integrateEuler(dt);
         particles[i]->udpateLifeTime(dt);
 
-        if (!particles[i]->IsAlive()) {
+        bool particleFar = (particles[i]->GetPos().p - iniPos).magnitude() >= maxDistance;
+
+        if (!particles[i]->IsAlive() || particleFar) {
             delete particles[i];
             particles[i] = particles.back();
             particles.pop_back();

@@ -6,22 +6,22 @@
 
 enum class ShapeType { Sphere, Box, Capsule };
 
-struct ParticleModel
-{
-	Vector3D pos;
-	Vector3D vel;
-	Vector3D acc;
-	Vector3D color;
-	float damping;
-	float radius;
-	float lifeTime;
-	float oppacity;
+struct ParticleModel {
+	Vector3D pos{ 0,0,0 };
+	Vector3D vel{ 0,0,0 };
+	Vector3D acc{ 0,0,0 };
+	Vector3D color{ 0,1,0 };
+	float opacity = 1.0f;
+	float damping = 0.99f;
+	float radius = 1.0f;
+	float lifeTime = FLT_MAX;
 	ShapeType shape = ShapeType::Sphere;
 };
 
 class Particle
 {
 public:
+	Particle(const ParticleModel& m);
 	Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius, 
 		Vector4 color, float _lifeTime = FLT_MAX, ShapeType shape = ShapeType::Sphere);
 	Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius, 
