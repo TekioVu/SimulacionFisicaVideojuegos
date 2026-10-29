@@ -15,6 +15,8 @@ public:
 	~ParticleSystem();
 
 	void update(double dt);
+	void addForceGenerator(ForceGenerator* fg);
+
 private:
 	float maxDistance;
 	Vector3D iniPos;

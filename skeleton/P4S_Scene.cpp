@@ -1,12 +1,15 @@
 #include "P4S_Scene.h"
 #include "GravityGenerator.h"
+#include "WindGenerator.h"
+#include "WhirlwindGenerator.h"
+#include "ExplosionGenerator.h"
 
 void P4S_Scene::init()
 {
     physx::PxShape* suelo = CreateShape(physx::PxBoxGeometry(50.0f, 0.1f, 150.0f));
     addRenderItem(suelo, Vector3(50.0f, 42.0f, 50.0f), GRAY);
 
-    addHose();
+    addFog();
 }
 
 void P4S_Scene::cleanup()
@@ -32,6 +35,12 @@ void P4S_Scene::update(double dt)
 }
 
 void P4S_Scene::keyPress(unsigned char key, const physx::PxTransform& camera) {
+    if (key == 'k' || key == 'K') {
+        for (auto ps : particleSystems) {
+            ExplosionGenerator* eg = new ExplosionGenerator(Vector3D(50.0f, 43.0f, 50.0f), 50.0f, 25000.0f, 0.5f);
+            ps->addForceGenerator(eg);
+        }
+    }
 }
 
 void P4S_Scene::addRenderItem(physx::PxShape* shape, const Vector3& pos, const Colors& color)
@@ -40,47 +49,49 @@ void P4S_Scene::addRenderItem(physx::PxShape* shape, const Vector3& pos, const C
     m_renderItems.push_back(new RenderItem(shape, &m_transforms.back(), Color(color)));
 }
 
-void P4S_Scene::addHose()
+void P4S_Scene::addFog()
 {
-    //MANGUERA
-    ParticleModel pm;
-    pm.pos = Vector3D{ 40.0f, 50.0f, 40.0f };   // boquilla de la manguera
-    pm.vel = Vector3D{ 0.0f, 6.0f, 15.0f };     // chorro hacia delante (+Z) y algo hacia arriba (+Y)
-    pm.acc = Vector3D{ 0.0f, 0.0f, 0.0f };     // gravedad
-    pm.damping = 0.99f;                             // casi sin pérdida de velocidad
-    pm.radius = 0.1f;                              // tamaño de cada gota
-    pm.lifeTime = 5.0f;
-    pm.color = Vector3D{ 0.3f, 0.6f, 1.0f };    // azul claro de agua
-    pm.opacity = 1.0f;
+    // NIEBLA
+    ParticleModel fogModel;
+    fogModel.pos = Vector3D{ 50.0f, 43.0f, 50.0f };   // centro de la zona de niebla, a ras de suelo
+    fogModel.vel = Vector3D{ 0.3f, 0.0f, 0.0f };      // deriva lenta con el "viento" (+X)
+    fogModel.acc = Vector3D{ 0.0f, 0.0f, 0.0f };      // sin fuerzas
+    fogModel.damping = 0.99f;
+    fogModel.radius = 1.5f;                              // partículas grandes que se solapan
+    fogModel.lifeTime = 8.0f;                              // vida larga para que se acumulen
+    fogModel.color = Vector3D{ 0.8f, 0.82f, 0.85f };    // gris blanquecino
+    fogModel.opacity = 0.15f;                             // muy transparente
 
-    ParticleGeneratorInfo pGI;
+    ParticleGeneratorInfo fogInfo;
 
-    pGI.pos = VectorSpec(UNIFORM);
-    pGI.pos.variability = { 0.05, 0.05, 0.05 };    // boquilla de ~10 cm
+    fogInfo.pos = VectorSpec(UNIFORM);
+    fogInfo.pos.variability = { 30.0, 1.0, 30.0 };    // zona ancha y muy baja
 
-    pGI.vel = VectorSpec(NORMAL);
-    pGI.vel.variability = { 0.5, 0.5, 0.5 };       // abanico estrecho de chorro
+    fogInfo.vel = VectorSpec(NORMAL);
+    fogInfo.vel.variability = { 0.2, 0.05, 0.2 };     // movimiento casi imperceptible
 
-    pGI.acc = VectorSpec(NORMAL);
-    pGI.acc.variability = { 0.0, 0.0, 0.0 };
+    fogInfo.acc = VectorSpec(UNIFORM);
+    fogInfo.acc.variability = { 0.0, 0.0, 0.0 };
 
-    pGI.color = VectorSpec(UNIFORM);
-    pGI.color.variability = { 0.1, 0.1, 0.0 };   // R y G varían un poco, B siempre al máximo
+    fogInfo.color = VectorSpec(UNIFORM);
+    fogInfo.color.variability = { 0.05, 0.05, 0.05 };   // grises ligeramente distintos
 
-    pGI.damping = ScalarSpec(UNIFORM);
-    pGI.damping.variability = { 0.005 };           // 0.99 ± 0.005
+    fogInfo.damping = ScalarSpec(UNIFORM);
+    fogInfo.damping.variability = { 0.005 };
 
-    pGI.radius = ScalarSpec(UNIFORM);
-    pGI.radius.variability = { 0.03 };             // gotas de tamaños parecidos
+    fogInfo.radius = ScalarSpec(UNIFORM);
+    fogInfo.radius.variability = { 0.5 };                // 1.0 a 2.0
 
-    pGI.lifeTime = ScalarSpec(UNIFORM);
-    pGI.lifeTime.variability = { 0.5 };            // ±0.5 s
+    fogInfo.lifeTime = ScalarSpec(UNIFORM);
+    fogInfo.lifeTime.variability = { 2.0 };               // 6 a 10 s
 
-    pGI.oppacity = ScalarSpec(UNIFORM);
-    pGI.oppacity.variability = { 0.0 };
+    fogInfo.oppacity = ScalarSpec(UNIFORM);
+    fogInfo.oppacity.variability = { 0.05 };              // 0.10 a 0.20
 
     std::vector<ForceGenerator*> forces;
-    forces.push_back(new GravityGenerator());
-    ParticleSystem* hose = new ParticleSystem(pm, pGI, forces);
+    //forces.push_back(new WhirlwindGenerator(Vector3D(50.0f, 43.0f, 50.0f), 3.0f));
+    //forces.push_back(new WindGenerator(Vector3D(50.0f, 43.0f, 50.0f), 0.5f, 0.05f));
+    //forces.push_back(new GravityGenerator());
+    ParticleSystem* hose = new ParticleSystem(fogModel, fogInfo, forces);
     particleSystems.push_back(hose);
 }

@@ -284,6 +284,7 @@
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="EmptyScene.h" />
+    <ClInclude Include="ExplosionGenerator.h" />
     <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="GravityGenerator.h" />
     <ClInclude Include="P0S_Scene.h" />
@@ -303,6 +304,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WhirlwindGenerator.h" />
     <ClInclude Include="WindGenerator.h" />
   </ItemGroup>
   <ItemGroup>

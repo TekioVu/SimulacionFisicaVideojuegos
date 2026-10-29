@@ -25,6 +25,9 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::update(double dt)
 {
+    for (auto f : forces)
+        f->update(dt);
+
     particles.push_back(generator->generateParticle());
 
     for (size_t i = 0; i < particles.size();) {
@@ -61,3 +64,9 @@ void ParticleSystem::update(double dt)
         }
     }
 }
+
+void ParticleSystem::addForceGenerator(ForceGenerator* fg)
+{
+    forces.push_back(fg);
+}
+
