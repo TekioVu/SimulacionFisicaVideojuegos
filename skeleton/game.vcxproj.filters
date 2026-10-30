@@ -7,9 +7,6 @@
     <ClCompile Include="Render\Render.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="RenderUtils.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="P0S_Scene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
@@ -46,19 +43,29 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="callbacks.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderUtils.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="FinalScene.cpp">
+      <Filter>FinalProject</Filter>
+    </ClCompile>
+    <ClCompile Include="PacMan.cpp">
+      <Filter>FinalProject\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="core.hpp" />
     <ClInclude Include="Render\Camera.h">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="Render\Render.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="RenderUtils.hpp" />
-    <ClInclude Include="callbacks.hpp" />
-    <ClInclude Include="Vector3D.h" />
-    <ClInclude Include="ProbabilityDistributions.h" />
     <ClInclude Include="P0S_Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
@@ -113,6 +120,27 @@
     <ClInclude Include="ExplosionGenerator.h">
       <Filter>Particles\Forces</Filter>
     </ClInclude>
+    <ClInclude Include="callbacks.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="core.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderUtils.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ProbabilityDistributions.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3D.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="FinalScene.h">
+      <Filter>FinalProject</Filter>
+    </ClInclude>
+    <ClInclude Include="PacMan.h">
+      <Filter>FinalProject\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
@@ -127,8 +155,22 @@
     <Filter Include="Particles\Forces">
       <UniqueIdentifier>{56afceaf-f9af-46ec-8647-c46bf6acddac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{dfa1dcb0-20d1-4d18-8ad5-469c44f9cb28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{c655ce04-fd10-4d4b-8cb4-1cecbabe27a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FinalProject">
+      <UniqueIdentifier>{88fe51bc-d85c-49fd-9359-af584f28379c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FinalProject\Entities">
+      <UniqueIdentifier>{66bdfe81-5d5b-471a-9de7-c6c21e02c9dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <Filter>Core</Filter>
+    </None>
   </ItemGroup>
 </Project>

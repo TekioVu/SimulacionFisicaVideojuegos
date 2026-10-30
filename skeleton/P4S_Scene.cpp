@@ -89,7 +89,7 @@ void P4S_Scene::addFog()
     fogInfo.oppacity.variability = { 0.05 };              // 0.10 a 0.20
 
     std::vector<ForceGenerator*> forces;
-    //forces.push_back(new WhirlwindGenerator(Vector3D(50.0f, 43.0f, 50.0f), 3.0f));
+    forces.push_back(new WhirlwindGenerator(Vector3D(50.0f, 43.0f, 50.0f), 3.0f));
     //forces.push_back(new WindGenerator(Vector3D(50.0f, 43.0f, 50.0f), 0.5f, 0.05f));
     //forces.push_back(new GravityGenerator());
     ParticleSystem* hose = new ParticleSystem(fogModel, fogInfo, forces);
