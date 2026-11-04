@@ -10,6 +10,7 @@ public:
     virtual ~Character() = default;
 
     virtual void update(double dt) = 0;
+    virtual void calcNewDir(int r, int c, bool freeUp, bool freeDown, bool freeLeft, bool freeRight) {}
 
     void rotateToNewDirection();
     bool isDirectionModified() const { return actualDir != nextDir; }
@@ -20,7 +21,7 @@ public:
     tDir getNextDir() const { return nextDir; }
 
     static physx::PxVec3 dirToVector(tDir d);
-    physx::PxVec3 getNextDirVector() const { return dirToVector(nextDir); }
+    virtual physx::PxVec3 getNextDirVector() const { return dirToVector(nextDir); }
 
     physx::PxVec3 getPosition() const { return pose.p; }
     void setPosition(const physx::PxVec3& p) { pose.p = p; }

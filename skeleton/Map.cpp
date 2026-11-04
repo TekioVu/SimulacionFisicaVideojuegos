@@ -46,6 +46,9 @@ void Map::moveCharacter(double dt, Character* c)
 
     Cell front = { cell.r + (int)dir.z, cell.c + (int)dir.x };
 
+    c->calcNewDir(cell.r, cell.c,
+        canPass(cell.r - 1, cell.c), canPass(cell.r + 1, cell.c),
+        canPass(cell.r, cell.c - 1), canPass(cell.r, cell.c + 1));
     // Sin cambio de dirección: avanzar
     if (!c->isDirectionModified()) {
         stepForward(c, cell, front, dt);
