@@ -1,13 +1,18 @@
 #pragma once
-#include "RenderUtils.hpp"
+#include "Character.h"
 
-class PacMan
+class PacMan : public Character
 {
 public:
-    PacMan();
-
+    explicit PacMan(const Vector3D& pos);
     void keyPress(unsigned char key, const physx::PxTransform& camera);
-    void update();
-private:
-};
+    void update(double dt) override;
 
+private:
+    enum class CamMode { FirstPerson, ThirdPerson, TopDown };
+
+    void updateCamera();
+
+    CamMode camMode = CamMode::ThirdPerson;
+    physx::PxVec3 lastDir{ 0, 0, -1 };
+};

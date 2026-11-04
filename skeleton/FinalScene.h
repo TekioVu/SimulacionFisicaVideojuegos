@@ -3,6 +3,8 @@
 #include "ParticleSystem.h"
 #include "Particle.h"
 #include "PacMan.h"
+#include "Ghost.h"
+#include "Map.h"
 #include "RenderUtils.hpp"
 #include <deque>
 #include <vector>
@@ -34,7 +36,10 @@ private:
 	std::deque<physx::PxTransform> m_transforms;
 	std::vector<RenderItem*> m_renderItems;
 
-	PacMan* pacman;
+	Map mapa{ BLOCK_SIZE * 2.0f };
+
+	PacMan* pacman = nullptr;
+	std::vector<Ghost*> ghosts;
 	std::vector<Particle*> pills;
 	std::vector<ParticleSystem*> particleSystems;
 };

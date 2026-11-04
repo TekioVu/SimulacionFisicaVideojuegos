@@ -27,7 +27,7 @@ public:
 		Vector4 color, float _lifeTime = FLT_MAX, ShapeType shape = ShapeType::Sphere, float _mass = 1.0f);
 	Particle(Vector3D _pos, Vector3D _vel, Vector3D _acc, float _damping, float _radius, 
 		Scene::Colors color = Scene::GREEN, float _lifeTime = FLT_MAX, ShapeType shape = ShapeType::Sphere, float _mass = 1.0f);
-	~Particle();
+	virtual ~Particle();
 
 	void integrateEuler(double t);
 	void integrateSemiEuler(double t);
@@ -44,6 +44,7 @@ public:
 	Vector3D GetVel() { return vel; }
 
 protected:
+	physx::PxTransform pose;
 	Vector3D vel;
 	Vector3D acc;
 	double damping;
@@ -56,9 +57,8 @@ private:
 	physx::PxShape* MakeShape(ShapeType type, float size);
 
 	Vector3D prevPos;
-	bool firstStep;
+	bool firstStep = true;
 
-	physx::PxTransform pose;
 	RenderItem* renderItem;
 };
 

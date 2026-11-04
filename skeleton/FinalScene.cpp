@@ -1,8 +1,4 @@
 #include "FinalScene.h"
-#include "GravityGenerator.h"
-#include "WindGenerator.h"
-#include "WhirlwindGenerator.h"
-#include "ExplosionGenerator.h"
 
 #include <string>
 #include <fstream>
@@ -29,17 +25,27 @@ void FinalScene::cleanup()
 
     for (auto p : pills) delete p;
     pills.clear();
+
+    mapa.clearCharacters();
+    for (auto g : ghosts) delete g;
+    ghosts.clear();
+    delete pacman;
+    pacman = nullptr;
+
+    m_renderItems.clear();
+    m_transforms.clear();
 }
 
 void FinalScene::update(double dt)
 {
-    for (auto ps : particleSystems) {
-        ps->update(dt);
-    }
+    for (auto ps : particleSystems) ps->update(dt);
+    mapa.moveCharacters(dt);
 }
 
 void FinalScene::keyPress(unsigned char key, const physx::PxTransform& camera) {
-    pacman->keyPress(key, camera);
+    if (pacman != nullptr) {
+        pacman->keyPress(key, camera);
+    }
 }
 
 void FinalScene::addRenderItem(physx::PxShape* shape, const Vector3& pos, const Colors& color)
@@ -59,39 +65,44 @@ void FinalScene::ReadMap() {
 
     int cols, fils;
     mapFile >> cols >> fils;
+    std::vector<std::string> lineas(fils, std::string(cols, ' '));
 
     physx::PxShape* block = CreateShape(physx::PxBoxGeometry(BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE));
     for (int i = 0; i < fils; i++)
-    {
         for (int j = 0; j < cols; j++)
         {
             char c = ' ';
             mapFile >> c;
+            lineas[i][j] = c;
+            Vector3D pos(j * BLOCK_SIZE * 2, 0.0f, i * BLOCK_SIZE * 2);
 
-            if (c == 'x') {
-                addRenderItem(block, Vector3(j * BLOCK_SIZE * 2, 0.0f, i * BLOCK_SIZE * 2), BLUE);
-            }
-            else if(c == 'o') {
+            switch (c)
+            {
+            case 'x':
+                addRenderItem(block, Vector3(pos.x, pos.y, pos.z), BLUE);
+                break;
+            case 'o':
                 pills.push_back(new Particle(ParticleModel{
-                  .pos = Vector3D(j * BLOCK_SIZE * 2, 0.0f, i * BLOCK_SIZE * 2),
-                  .color = Vector3D(1.0f, 1.0f, 0.0f),
-                  .radius = PILL_RADIUS
-                    }));
-            }
-            else if(c == 'O') {
+                    .pos = pos, .color = Vector3D(1, 1, 0), .radius = PILL_RADIUS }));
+                break;
+            case 'O':
                 pills.push_back(new Particle(ParticleModel{
-                  .pos = Vector3D(j * BLOCK_SIZE * 2, 0.0f, i * BLOCK_SIZE * 2),
-                  .color = Vector3D(1.0f, 1.0f, 0.0f),
-                  .radius = POWER_RADIUS
-                    }));
+                    .pos = pos, .color = Vector3D(1, 1, 0), .radius = POWER_RADIUS }));
+                break;
+            case 'P':
+                pacman = new PacMan(pos);
+                mapa.addCharacter(pacman);
+                break;
+            case 'g': {
+                Ghost* g = new Ghost(pos, Vector4(1, 0, 0, 1));
+                ghosts.push_back(g);
+                mapa.addCharacter(g);
+                break;
             }
-            else if (c == 'P') {
-                pacman = new PacMan();
             }
         }
 
-        std::cout << std::endl;
-    }
+    mapa.load(lineas);
 
     physx::PxShape* suelo = CreateShape(physx::PxBoxGeometry(cols * BLOCK_SIZE, 0.1f, fils * BLOCK_SIZE));
     addRenderItem(suelo, Vector3( (cols - 1) * BLOCK_SIZE, - BLOCK_SIZE, (fils - 1) * BLOCK_SIZE), BLACK);

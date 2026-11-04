@@ -58,6 +58,15 @@
     <ClCompile Include="PacMan.cpp">
       <Filter>FinalProject\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Ghost.cpp">
+      <Filter>FinalProject\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>FinalProject\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>FinalProject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -140,6 +149,15 @@
     </ClInclude>
     <ClInclude Include="PacMan.h">
       <Filter>FinalProject\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghost.h">
+      <Filter>FinalProject\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>FinalProject\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>FinalProject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
