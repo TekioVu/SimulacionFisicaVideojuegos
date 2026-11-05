@@ -7,7 +7,7 @@
 void P4S_Scene::init()
 {
     physx::PxShape* suelo = CreateShape(physx::PxBoxGeometry(50.0f, 0.1f, 150.0f));
-    addRenderItem(suelo, Vector3(50.0f, 42.0f, 50.0f), GRAY);
+    addRenderItem(suelo, Vector3(50.0f, 42.0f, 50.0f), BLACK);
 
     addFog();
 }
@@ -57,10 +57,10 @@ void P4S_Scene::addFog()
     fogModel.vel = Vector3D{ 0.3f, 0.0f, 0.0f };      // deriva lenta con el "viento" (+X)
     fogModel.acc = Vector3D{ 0.0f, 0.0f, 0.0f };      // sin fuerzas
     fogModel.damping = 0.99f;
-    fogModel.radius = 1.5f;                              // partículas grandes que se solapan
+    fogModel.radius = 0.5f;                              // partículas grandes que se solapan
     fogModel.lifeTime = 8.0f;                              // vida larga para que se acumulen
-    fogModel.color = Vector3D{ 0.8f, 0.82f, 0.85f };    // gris blanquecino
-    fogModel.opacity = 0.15f;                             // muy transparente
+    fogModel.color = Vector3D{1.0f, 1.0f, 0.0f };    // gris blanquecino
+    fogModel.opacity = 1.0f;                             // muy transparente
 
     ParticleGeneratorInfo fogInfo;
 
@@ -86,7 +86,7 @@ void P4S_Scene::addFog()
     fogInfo.lifeTime.variability = { 2.0 };               // 6 a 10 s
 
     fogInfo.oppacity = ScalarSpec(UNIFORM);
-    fogInfo.oppacity.variability = { 0.05 };              // 0.10 a 0.20
+    fogInfo.oppacity.variability = { 0.0f };              // 0.10 a 0.20
 
     std::vector<ForceGenerator*> forces;
     forces.push_back(new WhirlwindGenerator(Vector3D(50.0f, 43.0f, 50.0f), 3.0f));

@@ -71,7 +71,7 @@ void PacMan::keyPress(unsigned char key, const physx::PxTransform&)
 
 void PacMan::update(double dt)
 {
-    updateCamera(dt);
+    //updateCamera(dt);
 }
 
 void PacMan::updateCamera(double dt)

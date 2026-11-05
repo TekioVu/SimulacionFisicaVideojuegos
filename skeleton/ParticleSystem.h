@@ -16,13 +16,14 @@ public:
 
 	void update(double dt);
 	void addForceGenerator(ForceGenerator* fg);
+	void addParticleGenerator(ParticleGenerator* pg);
 
 private:
 	float maxDistance;
 	Vector3D iniPos;
 
 	std::vector<Particle*> particles;
-	ParticleGenerator* generator;
+	std::vector<ParticleGenerator*> generators;
 
 	bool applyForces;
 	std::vector<ForceGenerator*> forces;

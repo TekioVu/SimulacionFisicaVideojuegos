@@ -28,5 +28,6 @@ private:
 	std::vector<RenderItem*> m_renderItems;
 
 	Particle* particle;
+	Particle* particle2;
 };
 

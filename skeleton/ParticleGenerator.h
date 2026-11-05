@@ -34,9 +34,12 @@ public:
 	void update(double dt);
 	Particle* generateParticle();
 
+	bool isActive() { return active; }
+	void setActive(bool _active) { active = _active; }
 private:
 	ParticleModel model;
 	ParticleGeneratorInfo info;
+	bool active = true;
 
 	float sample(float iniV, ScalarSpec _spec) const;
 	Vector3D sample(Vector3D iniV, VectorSpec _spec) const;

@@ -6,12 +6,16 @@ void P1S_Scene::init()
 
     //ENEMY
     addRenderItem(shape, Vector3(0.0f, 0.0f, 0.0f), BLACK);
-    Vector3 v = Vector3(1.0f, 0.0f, 1.0f);
+    Vector3 v = Vector3(5.0f, 0.0f, 0.0f);
     Vector3 a = Vector3(3.0f, 0.0f, 0.0f);
 	float damping = 0.8f;
     float radius = 1.0f;
 
-	particle = new Particle(Vector3(0.0f, 0.0f, 0.0f), v, a, damping, radius);
+    float mass1 = 0.1f;
+	particle = new Particle(Vector3(0.0f, 0.0f, 0.0f), v, a, damping, radius, GREEN,100.0f,ShapeType::Sphere, mass1);
+
+    float mass2 = 20.0f;
+    particle2 = new Particle(Vector3(0.0f, 0.0f, 5.0f), v, a, damping, radius, RED, 100.0f, ShapeType::Sphere, mass2);
 }
 
 void P1S_Scene::cleanup()
@@ -25,16 +29,18 @@ void P1S_Scene::cleanup()
 
     delete particle;
     particle = nullptr;
+
+    delete particle2;
+    particle2 = nullptr;
 }
 
 void P1S_Scene::update(double dt)
 {
-	particle->integrateEuler(dt);
+    particle->integrateEuler(dt);
+    particle2->integrateEuler(dt);
 }
 
 void P1S_Scene::keyPress(unsigned char key, const physx::PxTransform& camera) {
-    if (key == 'r' || key == 'R') {
-    }
 }
 
 void P1S_Scene::addRenderItem(physx::PxShape* shape, const Vector3& pos, const Colors& color)

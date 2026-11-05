@@ -3,13 +3,13 @@
 ParticleSystem::ParticleSystem(ParticleModel m, ParticleGeneratorInfo info, int _maxDistance) 
     : maxDistance(_maxDistance), iniPos(m.pos), applyForces(false)
 {
-    generator = new ParticleGenerator(m , info);
+    generators.push_back(new ParticleGenerator(m , info));
 }
 
 ParticleSystem::ParticleSystem(ParticleModel m, ParticleGeneratorInfo info, const std::vector<ForceGenerator*>& _forces,
     int _maxDistance) : maxDistance(_maxDistance), iniPos(m.pos), applyForces(true), forces(_forces)
 {
-    generator = new ParticleGenerator(m, info);
+    generators.push_back(new ParticleGenerator(m, info));
 }
 
 ParticleSystem::~ParticleSystem()
@@ -19,8 +19,10 @@ ParticleSystem::~ParticleSystem()
     }
     particles.clear();
 
-    delete generator;
-    generator = nullptr;
+    for (auto g : generators) {
+        delete g;
+    }
+    generators.clear();
 }
 
 void ParticleSystem::update(double dt)
@@ -28,7 +30,10 @@ void ParticleSystem::update(double dt)
     for (auto f : forces)
         f->update(dt);
 
-    particles.push_back(generator->generateParticle());
+    for (auto g : generators) {
+        if(g->isActive())
+            particles.push_back(g->generateParticle());
+    }
 
     for (size_t i = 0; i < particles.size();) {
 
@@ -68,5 +73,10 @@ void ParticleSystem::update(double dt)
 void ParticleSystem::addForceGenerator(ForceGenerator* fg)
 {
     forces.push_back(fg);
+}
+
+void ParticleSystem::addParticleGenerator(ParticleGenerator* pg)
+{
+    generators.push_back(pg);
 }
 
