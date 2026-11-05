@@ -10,9 +10,18 @@ public:
 
 private:
     enum class CamMode { FirstPerson, ThirdPerson, TopDown };
+    void updateCamera(double dt);
+    void cycleCamera();
 
-    void updateCamera();
+    enum class Input { Forward, Back, Left, Right, None };
+    static Input keyToInput(unsigned char key);
+    tDir resolveDir(Input in) const;
+    static tDir vecToDir(const physx::PxVec3& v);
 
-    CamMode camMode = CamMode::ThirdPerson;
     physx::PxVec3 lastDir{ 0, 0, -1 };
+    CamMode camMode = CamMode::ThirdPerson;
+    physx::PxVec3 camEye{ 0, 0, 0 };   
+    physx::PxVec3 camDir{ 0, 0, -1 };
+    bool camInit = false;
+    float camSmooth = 6.0f;             
 };

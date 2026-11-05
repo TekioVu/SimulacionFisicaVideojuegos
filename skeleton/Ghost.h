@@ -17,6 +17,7 @@ private:
     int lastR = -1, lastC = -1;   // última celda en la que decidió
 
     void updateLegs();
+
     std::array<physx::PxTransform, NUM_LEGS> legTransforms;
     std::array<physx::PxVec3, NUM_LEGS> legOffsets;
     std::array<RenderItem*, NUM_LEGS> legItems{};

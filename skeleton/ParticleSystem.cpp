@@ -36,8 +36,8 @@ void ParticleSystem::update(double dt)
         if (applyForces) {
             Vector3D force;
 
-            Vector3D pos = particles[i]->GetPos().p;
-            Vector3D vel = particles[i]->GetVel();
+            const Vector3D pos = particles[i]->GetPos().p;
+            const Vector3D vel = particles[i]->GetVel();
             float mass = particles[i]->GetMass();
 
             for (auto f : forces) {

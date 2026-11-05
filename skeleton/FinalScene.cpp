@@ -75,19 +75,20 @@ void FinalScene::ReadMap() {
             mapFile >> c;
             lineas[i][j] = c;
             Vector3D pos(j * BLOCK_SIZE * 2, 0.0f, i * BLOCK_SIZE * 2);
+            Vector3D pillsPos(j * BLOCK_SIZE * 2, -2.0f, i * BLOCK_SIZE * 2);
 
             switch (c)
             {
             case 'x':
-                addRenderItem(block, Vector3(pos.x, pos.y, pos.z), BLUE);
+                addRenderItem(block, pos, BLUE);
                 break;
             case 'o':
                 pills.push_back(new Particle(ParticleModel{
-                    .pos = pos, .color = Vector3D(1, 1, 0), .radius = PILL_RADIUS }));
+                    .pos = pillsPos, .color = Vector3D(1, 1, 0), .radius = PILL_RADIUS }));
                 break;
             case 'O':
                 pills.push_back(new Particle(ParticleModel{
-                    .pos = pos, .color = Vector3D(1, 1, 0), .radius = POWER_RADIUS }));
+                    .pos = pillsPos, .color = Vector3D(1, 1, 0), .radius = POWER_RADIUS }));
                 break;
             case 'P':
                 pacman = new PacMan(pos);

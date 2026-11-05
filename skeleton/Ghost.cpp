@@ -25,6 +25,13 @@ Ghost::Ghost(const Vector3D& pos, Vector4 color)
     }
 }
 
+Ghost::~Ghost()
+{
+    for (auto& item : legItems) {
+        if (item) { item->release(); item = nullptr; }
+    }
+}
+
 void Ghost::calcNewDir(int r, int c, bool freeUp, bool freeDown, bool freeLeft, bool freeRight)
 {
     if (actualDir != nextDir) return;   // ya hay un giro pendiente, que Map lo aplique
@@ -54,13 +61,6 @@ void Ghost::calcNewDir(int r, int c, bool freeUp, bool freeDown, bool freeLeft, 
 
     lastR = r; lastC = c;
     setNextDir(options[UniformDistribution(0, (int)options.size() - 1)]);
-}
-
-Ghost::~Ghost()
-{
-    for (auto& item : legItems) {
-        if (item) { item->release(); item = nullptr; }
-    }
 }
 
 void Ghost::update(double dt)

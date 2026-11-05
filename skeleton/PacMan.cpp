@@ -9,29 +9,72 @@ PacMan::PacMan(const Vector3D& pos)
 {
 }
 
-void PacMan::keyPress(unsigned char key, const physx::PxTransform&)
+PacMan::Input PacMan::keyToInput(unsigned char key)
 {
-    switch (key) {
-    case 'i': case 'I': setNextDir(UP);    break;
-    case 'k': case 'K': setNextDir(DOWN);  break;
-    case 'j': case 'J': setNextDir(LEFT);  break;
-    case 'l': case 'L': setNextDir(RIGHT); break;
-    case 'c': case 'C':
-        switch (camMode) {
-        case CamMode::FirstPerson: camMode = CamMode::ThirdPerson; break;
-        case CamMode::ThirdPerson: camMode = CamMode::TopDown;     break;
-        case CamMode::TopDown:     camMode = CamMode::FirstPerson; break;
-        }
-        break;
+    switch (std::tolower(key)) {
+    case 'i': return Input::Forward;
+    case 'k': return Input::Back;
+    case 'j': return Input::Left;
+    case 'l': return Input::Right;
+    default:  return Input::None;
     }
 }
 
-void PacMan::update(double dt)
+Character::tDir PacMan::vecToDir(const physx::PxVec3& v)
 {
-    updateCamera();
+    if (std::abs(v.x) > std::abs(v.z))
+        return v.x > 0 ? Character::RIGHT : Character::LEFT;
+    return v.z > 0 ? Character::DOWN : Character::UP;
 }
 
-void PacMan::updateCamera()
+void PacMan::cycleCamera()
+{
+    camMode = static_cast<CamMode>((static_cast<int>(camMode) + 1) % 3);
+}
+
+Character::tDir PacMan::resolveDir(Input in) const
+{
+    if (camMode == CamMode::TopDown) {
+        switch (in) {
+        case Input::Forward: return UP;
+        case Input::Back:    return DOWN;
+        case Input::Left:    return LEFT;
+        default:             return RIGHT;
+        }
+    }
+
+    // 1ª y 3ª persona: relativo a hacia dónde mira Pac-Man
+    physx::PxVec3 fwd = dirToVector(actualDir);
+    if (fwd.isZero()) fwd = lastDir;
+    physx::PxVec3 right = fwd.cross(physx::PxVec3(0, 1, 0));
+
+    switch (in) {
+    case Input::Forward: return vecToDir(fwd);
+    case Input::Back:    return vecToDir(-fwd);
+    case Input::Left:    return vecToDir(-right);
+    default:             return vecToDir(right);
+    }
+}
+
+void PacMan::keyPress(unsigned char key, const physx::PxTransform&)
+{
+    if (std::tolower(key) == 'c') {
+        cycleCamera();
+        return;
+    }
+
+    Input in = keyToInput(key);
+    if (in != Input::None)
+        setNextDir(resolveDir(in));
+}
+
+
+void PacMan::update(double dt)
+{
+    updateCamera(dt);
+}
+
+void PacMan::updateCamera(double dt)
 {
     auto* cam = GetCamera();
     if (!cam) return;
@@ -41,23 +84,36 @@ void PacMan::updateCamera()
     d = lastDir;
 
     physx::PxVec3 p = pose.p;
+    physx::PxVec3 targetEye, targetDir;
 
     switch (camMode) {
     case CamMode::FirstPerson:
-        cam->setEye(p + d * 5.0f);
-        cam->setDir(d);
+        targetEye = p + d * 8.0f;
+        targetDir = d;
         break;
-
-    case CamMode::ThirdPerson: {
-        physx::PxVec3 eye = p - d * 30.0f + physx::PxVec3(0, 20.0f, 0);
-        cam->setEye(eye);
-        cam->setDir((p + d * 20.0f - eye).getNormalized());
+    case CamMode::ThirdPerson:
+        targetEye = p - d * 30.0f + physx::PxVec3(0, 20.0f, 0);
+        targetDir = (p + d * 20.0f - targetEye).getNormalized();
         break;
-    }
-
     case CamMode::TopDown:
-        cam->setEye(p + physx::PxVec3(0, 120.0f, 40.0f));
-        cam->setDir(physx::PxVec3(0.0f, -1.0f, -0.3f).getNormalized());
+    default:
+        targetEye = p + physx::PxVec3(0, 120.0f, 40.0f);
+        targetDir = physx::PxVec3(0.0f, -1.0f, -0.3f).getNormalized();
         break;
     }
+
+    if (!camInit) {            
+        camEye = targetEye;
+        camDir = targetDir;
+        camInit = true;
+    }
+    else {
+        float t = 1.0f - std::exp(-camSmooth * (float)dt);
+        camEye = camEye + (targetEye - camEye) * t;
+        physx::PxVec3 nd = camDir + (targetDir - camDir) * t;
+        if (nd.magnitudeSquared() > 1e-6f) camDir = nd.getNormalized();
+    }
+
+    cam->setEye(camEye);
+    cam->setDir(camDir);
 }
