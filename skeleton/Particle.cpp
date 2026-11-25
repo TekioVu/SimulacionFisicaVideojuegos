@@ -54,11 +54,6 @@ void Particle::setAcceleration(Vector3D a)
 	acc = a;
 }
 
-void Particle::applyForce(Vector3D force)
-{
-    acc = force / mass;
-}
-
 void Particle::udpateLifeTime(double dt)
 {
 	lifeTime -= dt;
@@ -66,21 +61,30 @@ void Particle::udpateLifeTime(double dt)
 		alive = false;
 	}
 }
+void Particle::applyForce(Vector3D force)
+{
+    forceAccum = forceAccum + force;       // acumula en vez de sobrescribir
+}
 
 void Particle::integrateEuler(double t)
 {
-	pose = physx::PxTransform(pose.p + vel * t);
-	vel = vel * pow(damping, t) + acc * t;
+    Vector3D a = acc + forceAccum / mass;  // aceleración constante + fuerzas
+    pose = physx::PxTransform(pose.p + vel * t);
+    vel = vel * pow(damping, t) + a * t;
+    forceAccum = Vector3D{ 0.0f, 0.0f, 0.0f };
 }
 
 void Particle::integrateSemiEuler(double t)
 {
-	vel = vel * pow(damping, t) + acc * t;
-	pose = physx::PxTransform(pose.p + vel * t);
+    Vector3D a = acc + forceAccum / mass;
+    vel = vel * pow(damping, t) + a * t;
+    pose = physx::PxTransform(pose.p + vel * t);
+    forceAccum = Vector3D{ 0.0f, 0.0f, 0.0f };
 }
 
 void Particle::integrateVerlet(double t)
 {
+    Vector3D a = acc + forceAccum / mass;
     Vector3D currentPos = pose.p;
 
     if (firstStep)
@@ -89,10 +93,11 @@ void Particle::integrateVerlet(double t)
         firstStep = false;
     }
 
-    Vector3D nextPos = currentPos * 2.0 - prevPos + acc * (t * t);
+    Vector3D nextPos = currentPos * 2.0 - prevPos + a * (t * t);
 
     vel = (nextPos - prevPos) / (2.0 * t);
 
     prevPos = currentPos;
     pose = physx::PxTransform(nextPos, pose.q);
+    forceAccum = Vector3D{ 0.0f, 0.0f, 0.0f };
 }

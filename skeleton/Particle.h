@@ -60,5 +60,6 @@ private:
 	bool firstStep = true;
 
 	RenderItem* renderItem;
+	Vector3D forceAccum{ 0.0f, 0.0f, 0.0f };
 };
 

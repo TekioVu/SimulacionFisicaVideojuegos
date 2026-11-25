@@ -27,6 +27,7 @@
 #include "P2S_Scene.h"
 #include "P3S_Scene.h"
 #include "P4S_Scene.h"
+#include "P5S_Scene.h"
 #include "FinalScene.h"
 
 #include <foundation/PxSimpleTypes.h>
@@ -109,6 +110,7 @@ void initPhysics(bool interactive)
 	SceneManager::instance().registerScene<P2S_Scene>("P2S_Scene");
 	SceneManager::instance().registerScene<P3S_Scene>("P3S_Scene");
 	SceneManager::instance().registerScene<P4S_Scene>("P4S_Scene");
+	SceneManager::instance().registerScene<P5S_Scene>("P5S_Scene");
 	SceneManager::instance().registerScene<FinalScene>("FinalScene");
 	
 	// Cargar la escena inicial

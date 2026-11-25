@@ -273,6 +273,7 @@
     <ClCompile Include="P2S_Scene.cpp" />
     <ClCompile Include="P3S_Scene.cpp" />
     <ClCompile Include="P4S_Scene.cpp" />
+    <ClCompile Include="P5S_Scene.cpp" />
     <ClCompile Include="PacMan.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleGenerator.cpp" />
@@ -286,6 +287,8 @@
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnchoredSpringForceGenerator.h" />
+    <ClInclude Include="BuoyancyForceGenerator.h" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="core.hpp" />
@@ -301,6 +304,7 @@
     <ClInclude Include="P2S_Scene.h" />
     <ClInclude Include="P3S_Scene.h" />
     <ClInclude Include="P4S_Scene.h" />
+    <ClInclude Include="P5S_Scene.h" />
     <ClInclude Include="PacMan.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleGenerator.h" />
@@ -312,6 +316,7 @@
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WhirlwindGenerator.h" />

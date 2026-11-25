@@ -67,6 +67,9 @@
     <ClCompile Include="Map.cpp">
       <Filter>FinalProject</Filter>
     </ClCompile>
+    <ClCompile Include="P5S_Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -158,6 +161,18 @@
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>FinalProject</Filter>
+    </ClInclude>
+    <ClInclude Include="P5S_Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SpringForceGenerator.h">
+      <Filter>Particles\Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="BuoyancyForceGenerator.h">
+      <Filter>Particles\Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="AnchoredSpringForceGenerator.h">
+      <Filter>Particles\Forces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -78,9 +78,16 @@ void SceneManager::keyPress(unsigned char key, const physx::PxTransform& cameraT
     }
 
     if (key == '5') {
+        changeScene("P5S_Scene");
+        return;
+    }
+
+    if (key == '6') {
         changeScene("FinalScene");
         return;
     }
+
+
 
     // Si no es una tecla de navegación global, se la pasamos a la escena activa
     if (m_currentScene != nullptr) {
