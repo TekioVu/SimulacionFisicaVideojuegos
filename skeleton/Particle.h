@@ -41,6 +41,7 @@ public:
 	bool IsAlive() { return alive; }
 	physx::PxTransform GetPos() { return pose; }
 	float GetMass() { return mass; }
+	void setMass(float _mass) { mass = _mass; }
 	Vector3D GetVel() { return vel; }
 
 protected:

@@ -1,24 +1,37 @@
 #include "P5S_Scene.h"
 #include <algorithm>
+#include "RubberBandForceGenerator.h"
 
 void P5S_Scene::init()
 {
     physx::PxShape* suelo = CreateShape(physx::PxBoxGeometry(50.0f, 0.1f, 150.0f));
     addRenderItem(suelo, Vector3(50.0f, 30.0f, 50.0f), GRAY);
     
-    //APARTADO 1
-    Vector3D ANCHOR_POS = Vector3(60.0f, 60.0f, 60.0f);
-    physx::PxShape* cuboReferencia = CreateShape(physx::PxBoxGeometry(1.0f, 1.0f, 1.0f));
-    addRenderItem(cuboReferencia, ANCHOR_POS, RED);
-
     ParticleModel springModel;
-    springModel.pos = Vector3D{ 60.0f, 58.0f, 60.0f };  
+    springModel.pos = Vector3D{ 60.0f, 58.0f, 60.0f };
     springModel.vel = Vector3D{ 0.0f, 0.0f, 0.0f };
     springModel.acc = Vector3D{ 0.0f, 0.0f, 0.0f };
     springModel.damping = 0.99f;
     springModel.radius = 1.0f;
     springModel.color = Vector3D{ 1.0f, 0.2f, 0.2f };
     springModel.opacity = 1.0f;
+
+    //APARTADO 1
+    AddStaticSpring(springModel);
+    //APARTADO 2
+    AddTwoParticleSpring(springModel);
+    //GOMA
+    AddRubberBand(springModel);
+    //FLOTACION
+    AddBuoyancy();
+}
+
+void P5S_Scene::AddStaticSpring(ParticleModel springModel)
+{
+    Vector3D ANCHOR_POS = Vector3(60.0f, 60.0f, 60.0f);
+    physx::PxShape* cuboReferencia = CreateShape(physx::PxBoxGeometry(1.0f, 1.0f, 1.0f));
+    addRenderItem(cuboReferencia, ANCHOR_POS, RED);
+
 
     staticParticle = new Particle(springModel);
     particles.push_back(staticParticle);
@@ -30,8 +43,10 @@ void P5S_Scene::init()
     GravityGenerator* g = new GravityGenerator();
     g->AddParticle(staticParticle);
     forces.push_back(g);
+}
 
-    //APARTADO 2
+void P5S_Scene::AddTwoParticleSpring(ParticleModel springModel)
+{
     springModel.pos = Vector3D{ 70.0f, 68.0f, 60.0f };
     Particle* p1 = new Particle(springModel);
     springModel.pos = Vector3D{ 50.0f, 68.0f, 60.0f };
@@ -45,7 +60,52 @@ void P5S_Scene::init()
     SpringForceGenerator* f2 = new SpringForceGenerator(20, 10, p1);
     f2->AddParticle(p2);
     forces.push_back(f2);
+}
 
+void P5S_Scene::AddRubberBand(ParticleModel springModel)
+{
+    springModel.color = Vector3D{ 0.2f, 1.0f, 0.4f };
+    springModel.damping = 0.76f;
+
+    springModel.pos = Vector3D{ 70.0f, 80.0f, 60.0f };
+    Particle* p3 = new Particle(springModel);
+    springModel.pos = Vector3D{ 82.0f, 80.0f, 60.0f };
+    Particle* p4 = new Particle(springModel);
+    particles.push_back(p3);
+    particles.push_back(p4);
+
+    RubberBandForceGenerator* r1 = new RubberBandForceGenerator(20.0f, 10.0f, p4);
+    r1->AddParticle(p3);
+    forces.push_back(r1);
+    RubberBandForceGenerator* r2 = new RubberBandForceGenerator(20.0f, 10.0f, p3);
+    r2->AddParticle(p4);
+    forces.push_back(r2);
+}
+
+void P5S_Scene::AddBuoyancy()
+{
+    const float WATER_Y = 50.0f;
+
+    physx::PxShape* agua = CreateShape(physx::PxBoxGeometry(20.0f, 0.05f, 20.0f));
+    addRenderItem(agua, Vector3(100.0f, WATER_Y, 60.0f), BLUE);  
+
+    ParticleModel m;
+    m.shape = ShapeType::Box;
+    m.radius = 0.5f;                              
+    m.mass = boxMass;
+    m.pos = Vector3D{ 100.0f, 58.0f, 60.0f };  
+    m.damping = 1.0f;                            
+    m.color = Vector3D{ 0.8f, 0.5f, 0.2f };
+    boxP = new Particle(m);
+    particles.push_back(boxP);
+
+    buoy = new BuoyancyForceGenerator(1.0f, 1.0f, 1000.0f, WATER_Y, 2000.0f);
+    buoy->AddParticle(boxP);
+    forces.push_back(buoy);
+
+    GravityGenerator* gBox = new GravityGenerator();
+    gBox->AddParticle(boxP);
+    forces.push_back(gBox);
 }
 
 void P5S_Scene::cleanup()
@@ -93,7 +153,11 @@ void P5S_Scene::keyPress(unsigned char key, const physx::PxTransform& camera)
     else if (key == 'f' || key == 'F')
         impulseTimer = 0.2f;                         
     else if (key == 'm' || key == 'M')
-        muelle->setK(600.0f);      
+        muelle->setK(600.0f);  
+    else if (key == 'q' || key == 'Q') { boxMass = (std::max)(boxMass - 50.0f, 50.0f);  boxP->setMass(boxMass); }
+    else if (key == 'r' || key == 'R') { boxMass += 50.0f;                              boxP->setMass(boxMass); }
+    else if (key == 'e' || key == 'E') buoy->setVolume((std::max)(buoy->getVolume() - 0.1f, 0.1f));
+    else if (key == 't' || key == 'T') buoy->setVolume(buoy->getVolume() + 0.1f);
 }
 
 void P5S_Scene::addRenderItem(physx::PxShape* shape, const Vector3& pos, const Colors& color)

@@ -7,6 +7,7 @@
 #include "RenderUtils.hpp"
 #include <deque>
 #include <vector>
+#include "BuoyancyForceGenerator.h"
 
 constexpr float K_INICIAL = 10.0f; 
 constexpr float K_PASO = 1.0f; 
@@ -32,6 +33,11 @@ public:
 private:
 	// Función para agregar un RenderItem a la escena, almacenando su transformada y color
 	void addRenderItem(physx::PxShape* shape, const Vector3& pos, const Colors& color);
+	void AddStaticSpring(ParticleModel springModel);
+	void AddTwoParticleSpring(ParticleModel springModel);
+	void AddRubberBand(ParticleModel springModel);
+	void AddBuoyancy();
+
 
 	std::deque<physx::PxTransform> m_transforms;
 	std::vector<RenderItem*> m_renderItems;
@@ -43,6 +49,11 @@ private:
 
 	SpringForceGenerator* muelle = nullptr;
 	Particle* staticParticle = nullptr;
+
+	//Flotacion
+	Particle* boxP; 
+	BuoyancyForceGenerator* buoy; 
+	float boxMass = 500.0f;
 
 };
 
