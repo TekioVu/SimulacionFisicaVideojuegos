@@ -22,6 +22,8 @@ void P5S_Scene::init()
     AddTwoParticleSpring(springModel);
     //GOMA
     AddRubberBand(springModel);
+    //SLINKY
+    AddSlinky(springModel);
     //FLOTACION
     AddBuoyancy();
 }
@@ -106,6 +108,40 @@ void P5S_Scene::AddBuoyancy()
     GravityGenerator* gBox = new GravityGenerator();
     gBox->AddParticle(boxP);
     forces.push_back(gBox);
+}
+
+void P5S_Scene::AddSlinky(ParticleModel m)
+{
+    m.color = Vector3D{ 0.9f, 0.8f, 0.1f };
+    m.radius = 0.5f;
+
+    const float spacing = SLINKY_REST * SLINKY_ELONG;
+    const float x = 20.0f, z = 60.0f, top = 100.0f;
+
+    GravityGenerator* gSlinky = new GravityGenerator();
+    Particle* prev = nullptr;
+
+    for (int i = 0; i < SLINKY_N; ++i) {
+        m.pos = Vector3D{ x, top - i * spacing, z };
+        Particle* p = new Particle(m);
+        particles.push_back(p);
+        gSlinky->AddParticle(p);
+
+        if (prev) {
+            auto a = new SpringForceGenerator(slinkyK, SLINKY_REST, prev);  a->AddParticle(p);
+            auto b = new SpringForceGenerator(slinkyK, SLINKY_REST, p);     b->AddParticle(prev);
+            forces.push_back(a);  forces.push_back(b);
+            slinkySprings.push_back(a);  slinkySprings.push_back(b);
+        }
+        else {
+            slinkyAnchor = new AnchoredSpringForceGenerator(
+                slinkyK, SLINKY_REST, Vector3D{ x, top + spacing, z });
+            slinkyAnchor->AddParticle(p);
+            forces.push_back(slinkyAnchor);
+        }
+        prev = p;
+    }
+    forces.push_back(gSlinky);
 }
 
 void P5S_Scene::cleanup()

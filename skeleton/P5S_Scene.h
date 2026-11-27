@@ -15,6 +15,11 @@ constexpr float K_MIN = 0.5f;
 constexpr float K_MAX = 2000.0f;
 constexpr float REST_LENGTH = 10.0f;
 
+constexpr int   SLINKY_N = 10;
+constexpr float SLINKY_K = 100.0f;
+constexpr float SLINKY_REST = 2.0f;
+constexpr float SLINKY_ELONG = 1.0f;
+
 class P5S_Scene : public Scene
 {
 public:
@@ -54,6 +59,14 @@ private:
 	Particle* boxP; 
 	BuoyancyForceGenerator* buoy; 
 	float boxMass = 500.0f;
+
+	std::vector<SpringForceGenerator*> slinkySprings;
+	AnchoredSpringForceGenerator* slinkyAnchor = nullptr;
+	float slinkyK = SLINKY_K;
+	bool  slinkyHeld = true;
+
+	void AddSlinky(ParticleModel m);
+	void setSlinkyK(float k);
 
 };
 
