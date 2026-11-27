@@ -1,0 +1,32 @@
+#pragma once
+#include "../Particle/Particle.h"
+#include "ParticleGenerator.h"
+#include "../Forces/ForceGenerator.h"
+
+static float DELETE_DISTANCE = 100.0f;
+
+class ParticleSystem
+{
+
+public:
+	ParticleSystem(ParticleModel m, ParticleGeneratorInfo info, int distanceEffect = INT_MAX);
+	ParticleSystem(ParticleModel m, ParticleGeneratorInfo info, const std::vector<ForceGenerator*>& _forces,
+		int distanceEffect = INT_MAX);
+	~ParticleSystem();
+
+	void update(double dt);
+	void addForceGenerator(ForceGenerator* fg);
+	void addParticleGenerator(ParticleGenerator* pg);
+
+private:
+	float maxDistance;
+	Vector3D iniPos;
+
+	std::vector<Particle*> particles;
+	std::vector<ParticleGenerator*> generators;
+
+	bool applyForces;
+	std::vector<ForceGenerator*> forces;
+
+};
+

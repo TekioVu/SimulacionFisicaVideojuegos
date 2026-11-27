@@ -7,40 +7,40 @@
     <ClCompile Include="Render\Render.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="P0S_Scene.cpp">
+    <ClCompile Include="Scenes\P0S_Scene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="P1S_Scene.cpp">
+    <ClCompile Include="Scenes\P1S_Scene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="P2S_Scene.cpp">
+    <ClCompile Include="Scenes\P2S_Scene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="P3S_Scene.cpp">
+    <ClCompile Include="Scenes\P3S_Scene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="P4S_Scene.cpp">
+    <ClCompile Include="Scenes\P4S_Scene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleGenerator.cpp">
+    <ClCompile Include="Particle\ParticleGenerator.cpp">
       <Filter>Particles</Filter>
     </ClCompile>
-    <ClCompile Include="Particle.cpp">
+    <ClCompile Include="Particle\Particle.cpp">
       <Filter>Particles</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleSystem.cpp">
+    <ClCompile Include="Particle\ParticleSystem.cpp">
       <Filter>Particles</Filter>
     </ClCompile>
-    <ClCompile Include="Projectile.cpp">
+    <ClCompile Include="Particle\Projectile.cpp">
       <Filter>Particles</Filter>
     </ClCompile>
-    <ClCompile Include="Weapon.cpp">
+    <ClCompile Include="Particle\Weapon.cpp">
       <Filter>Particles</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
+    <ClCompile Include="Scenes\SceneManager.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
+    <ClCompile Include="Scenes\Scene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="callbacks.cpp">
@@ -52,24 +52,32 @@
     <ClCompile Include="RenderUtils.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="FinalScene.cpp">
+    <ClCompile Include="FinalProject\FinalScene.cpp">
       <Filter>FinalProject</Filter>
     </ClCompile>
-    <ClCompile Include="PacMan.cpp">
+    <ClCompile Include="FinalProject\PacMan.cpp">
       <Filter>FinalProject\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Ghost.cpp">
+    <ClCompile Include="FinalProject\Ghost.cpp">
       <Filter>FinalProject\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Character.cpp">
+    <ClCompile Include="FinalProject\Character.cpp">
       <Filter>FinalProject\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
+    <ClCompile Include="FinalProject\Map.cpp">
       <Filter>FinalProject</Filter>
     </ClCompile>
-    <ClCompile Include="P5S_Scene.cpp">
+    <ClCompile Include="Scenes\P5S_Scene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Practica5\EjerciciosCuaterniones.cpp" />
+    <ClCompile Include="Practica5\EscenaJoints.cpp" />
+    <ClCompile Include="Practica5\EscenaSolidosRigidos.cpp" />
+    <ClCompile Include="Practica5\GravedadSR.cpp" />
+    <ClCompile Include="Practica5\SistemaSolidoRigido.cpp" />
+    <ClCompile Include="Practica5\SolidoRigido.cpp" />
+    <ClCompile Include="Practica5\TorbellinoSR.cpp" />
+    <ClCompile Include="Practica5\VientoSR.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -78,58 +86,58 @@
     <ClInclude Include="Render\Render.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="P0S_Scene.h">
+    <ClInclude Include="Scenes\P0S_Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="P1S_Scene.h">
+    <ClInclude Include="Scenes\P1S_Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="P2S_Scene.h">
+    <ClInclude Include="Scenes\P2S_Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="P3S_Scene.h">
+    <ClInclude Include="Scenes\P3S_Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="P4S_Scene.h">
+    <ClInclude Include="Scenes\P4S_Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Particle.h">
+    <ClInclude Include="Particle\Particle.h">
       <Filter>Particles</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleGenerator.h">
+    <ClInclude Include="Particle\ParticleGenerator.h">
       <Filter>Particles</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleSystem.h">
+    <ClInclude Include="Particle\ParticleSystem.h">
       <Filter>Particles</Filter>
     </ClInclude>
-    <ClInclude Include="Projectile.h">
+    <ClInclude Include="Particle\Projectile.h">
       <Filter>Particles</Filter>
     </ClInclude>
-    <ClInclude Include="Weapon.h">
+    <ClInclude Include="Particle\Weapon.h">
       <Filter>Particles</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
+    <ClInclude Include="Scenes\SceneManager.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
+    <ClInclude Include="Scenes\Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="EmptyScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="ForceGenerator.h">
+    <ClInclude Include="Forces\ForceGenerator.h">
       <Filter>Particles\Forces</Filter>
     </ClInclude>
-    <ClInclude Include="GravityGenerator.h">
+    <ClInclude Include="Forces\GravityGenerator.h">
       <Filter>Particles\Forces</Filter>
     </ClInclude>
-    <ClInclude Include="WindGenerator.h">
+    <ClInclude Include="Forces\WindGenerator.h">
       <Filter>Particles\Forces</Filter>
     </ClInclude>
-    <ClInclude Include="WhirlwindGenerator.h">
+    <ClInclude Include="Forces\WhirlwindGenerator.h">
       <Filter>Particles\Forces</Filter>
     </ClInclude>
-    <ClInclude Include="ExplosionGenerator.h">
+    <ClInclude Include="Forces\ExplosionGenerator.h">
       <Filter>Particles\Forces</Filter>
     </ClInclude>
     <ClInclude Include="callbacks.hpp">
@@ -141,42 +149,52 @@
     <ClInclude Include="RenderUtils.hpp">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="ProbabilityDistributions.h">
+    <ClInclude Include="Utils\ProbabilityDistributions.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Vector3D.h">
+    <ClInclude Include="Utils\Vector3D.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="FinalScene.h">
+    <ClInclude Include="FinalProject\FinalScene.h">
       <Filter>FinalProject</Filter>
     </ClInclude>
-    <ClInclude Include="PacMan.h">
+    <ClInclude Include="FinalProject\PacMan.h">
       <Filter>FinalProject\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Ghost.h">
+    <ClInclude Include="FinalProject\Ghost.h">
       <Filter>FinalProject\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Character.h">
+    <ClInclude Include="FinalProject\Character.h">
       <Filter>FinalProject\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
+    <ClInclude Include="FinalProject\Map.h">
       <Filter>FinalProject</Filter>
     </ClInclude>
-    <ClInclude Include="P5S_Scene.h">
+    <ClInclude Include="Scenes\P5S_Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="SpringForceGenerator.h">
+    <ClInclude Include="Forces\SpringForceGenerator.h">
       <Filter>Particles\Forces</Filter>
     </ClInclude>
-    <ClInclude Include="BuoyancyForceGenerator.h">
+    <ClInclude Include="Forces\BuoyancyForceGenerator.h">
       <Filter>Particles\Forces</Filter>
     </ClInclude>
-    <ClInclude Include="AnchoredSpringForceGenerator.h">
+    <ClInclude Include="Forces\AnchoredSpringForceGenerator.h">
       <Filter>Particles\Forces</Filter>
     </ClInclude>
-    <ClInclude Include="RubberBandForceGenerator.h">
+    <ClInclude Include="Forces\RubberBandForceGenerator.h">
       <Filter>Particles\Forces</Filter>
     </ClInclude>
+    <ClInclude Include="Practica5\EjerciciosCuaterniones.h" />
+    <ClInclude Include="Practica5\EscenaJoints.h" />
+    <ClInclude Include="Practica5\EscenaSolidosRigidos.h" />
+    <ClInclude Include="Practica5\GeneradorFuerzaSR.h" />
+    <ClInclude Include="Practica5\GravedadSR.h" />
+    <ClInclude Include="Practica5\RegistroFuerzasSR.hpp" />
+    <ClInclude Include="Practica5\SistemaSolidoRigido.h" />
+    <ClInclude Include="Practica5\SolidoRigido.h" />
+    <ClInclude Include="Practica5\TorbellinoSR.h" />
+    <ClInclude Include="Practica5\VientoSR.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
